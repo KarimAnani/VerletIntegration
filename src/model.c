@@ -110,7 +110,7 @@ DynamicArray* loadOBJ(const char* filename)
     size_t len = 0;
     ssize_t read;
 
-    while (fgets(line, sizeof(line), fp)) {  // replace getline with fgets
+    while (fgets(line, sizeof(line), fp)) {
 			char* words[4];
 			words[0] = strtok(line, " \n");
 			for (int i = 1; i < 4; ++i) {
