@@ -1,31 +1,19 @@
 CC = gcc
-CFLAGS = -Wall -std=c99 -O2
-LDFLAGS = -lpthread -lglfw -lGLEW -framework Cocoa -framework OpenGL -framework IOKit
+CFLAGS = -Wall -std=c99 -O2 -Isrc/dependencies/include
+LDFLAGS = -Lsrc/dependencies/library -lglfw3 -lglew32 -lopengl32 -lgdi32
 
-# Path to the glfw and glew libraries
-LIB_DIR = src/dependencies/library
-
-# Path to the include directories of glfw and glew
-INCLUDE_DIR = src/dependencies/include
-
-# Name of the output executable
-OUTPUT = app
-
-# Source files and object files
 SRC_DIR = src
 SRC = $(wildcard $(SRC_DIR)/*.c)
 OBJ = $(SRC:.c=.o)
+OUTPUT = app.exe
 
 all: $(OUTPUT)
 
 $(OUTPUT): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^ -L $(LIB_DIR) $(LDFLAGS)
+	$(CC) $(OBJ) -o $@ $(LDFLAGS)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $< -I $(INCLUDE_DIR)
-
-debug: CFLAGS += -DDEBUG -O0 -g
-debug: clean $(OUTPUT)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJ) $(OUTPUT)
+	del /Q $(SRC_DIR)\*.o $(OUTPUT)

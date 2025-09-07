@@ -110,53 +110,53 @@ DynamicArray* loadOBJ(const char* filename)
     size_t len = 0;
     ssize_t read;
 
-    while ((read = getline(&line, &len, fp)) != -1) {
-        char* words[4];
-        words[0] = strtok(line, " ");
-        for (int i = 1; i < 4; ++i) {
-            words[i] = strtok(NULL, " ");
-        }
+    while (fgets(line, sizeof(line), fp)) {  // replace getline with fgets
+			char* words[4];
+			words[0] = strtok(line, " \n");
+			for (int i = 1; i < 4; ++i) {
+				words[i] = strtok(NULL, " \n");
+			}
 
-        if (strcmp(words[0], "v") == 0) {
-            v[v_count].x = atof(words[1]);
-            v[v_count].y = atof(words[2]);
-            v[v_count].z = atof(words[3]);
-            v_count++;
-        } else if (strcmp(words[0], "vt") == 0) {
-            vt[vt_count].x = atof(words[1]);
-            vt[vt_count].y = atof(words[2]);
-            vt_count++;
-        } else if (strcmp(words[0], "vn") == 0) {
-            vn[vn_count].x = atof(words[1]);
-            vn[vn_count].y = atof(words[2]);
-            vn[vn_count].z = atof(words[3]);
-            vn_count++;
-        } else if (strcmp(words[0], "f") == 0) {
-            char* v1[3];
-            char* v2[3];
-            char* v3[3];
+			if (words[0] == NULL) continue;  // skip empty lines
 
-            v1[0] = strtok(words[1], "/");
-            v1[1] = strtok(NULL, "/");
-            v1[2] = strtok(NULL, "/");
-            v2[0] = strtok(words[2], "/");
-            v2[1] = strtok(NULL, "/");
-            v2[2] = strtok(NULL, "/");
-            v3[0] = strtok(words[3], "/");
-            v3[1] = strtok(NULL, "/");
-            v3[2] = strtok(NULL, "/");
+			if (strcmp(words[0], "v") == 0) {
+				v[v_count].x = atof(words[1]);
+				v[v_count].y = atof(words[2]);
+				v[v_count].z = atof(words[3]);
+				v_count++;
+			} else if (strcmp(words[0], "vt") == 0) {
+				vt[vt_count].x = atof(words[1]);
+				vt[vt_count].y = atof(words[2]);
+				vt_count++;
+			} else if (strcmp(words[0], "vn") == 0) {
+				vn[vn_count].x = atof(words[1]);
+				vn[vn_count].y = atof(words[2]);
+				vn[vn_count].z = atof(words[3]);
+				vn_count++;
+			} else if (strcmp(words[0], "f") == 0) {
+				char* v1[3];
+				char* v2[3];
+				char* v3[3];
 
-            processVertex(vertices, v1, v, vt, vn);
-            processVertex(vertices, v2, v, vt, vn);
-            processVertex(vertices, v3, v, vt, vn);
-        }
-    }
-    fclose(fp);
-    if (line) {
-        free(line);
-    }
+				v1[0] = strtok(words[1], "/");
+				v1[1] = strtok(NULL, "/");
+				v1[2] = strtok(NULL, "/");
+				v2[0] = strtok(words[2], "/");
+				v2[1] = strtok(NULL, "/");
+				v2[2] = strtok(NULL, "/");
+				v3[0] = strtok(words[3], "/");
+				v3[1] = strtok(NULL, "/");
+				v3[2] = strtok(NULL, "/");
 
-    return vertices;
+				processVertex(vertices, v1, v, vt, vn);
+				processVertex(vertices, v2, v, vt, vn);
+				processVertex(vertices, v3, v, vt, vn);
+			}
+		}
+
+		fclose(fp);
+
+		return vertices;
 }
 
 void processVertex(DynamicArray* vertices, char* vertexData[3], Vertex v[], Vertex vt[], Vertex vn[])
