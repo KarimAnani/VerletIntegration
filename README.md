@@ -6,6 +6,14 @@ This is an implementation of [Verlet Integration](https://www.algorithm-archive.
 
 Use the arrow keys to move the shape. Press G to apply force, V to add particles, and W and S for the camera.
 
+### Windows compatibility
+
+I've updated the makefile, shaders, and model.c file to be compatible with Windows, plus compiled the necessary .a and .DLL files from the original .dylibs.
+
+Compile with ```gcc src/*.c -o app.exe -Isrc/dependencies/include -Lsrc/dependencies/library -lglfw3 -lglew32 -lopengl32 -lgdi32```. 
+
+Run with ```.\app.exe``` (or whatever you want to change app.exe to).
+
 ### Key Features
 - Simulate thousands of particles (at 60 FPS) experiencing real-time collisions, arbitrary forces, constraints, and linking.
 - First person camera that can be controlled using the mouse and keyboard _or_ animated along a path ([Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)).
@@ -34,11 +42,3 @@ Use the arrow keys to move the shape. Press G to apply force, V to add particles
 
 ### Icosphere which maintains its pressure using [Ideal Gas Law](https://en.wikipedia.org/wiki/Ideal_gas_law)
 ![ezgif com-video-to-gif (3)](https://github.com/marichardson137/VerletIntegration/assets/77594556/937feb63-ffb4-4247-838c-f48b08db6508)
-
-### System Specs.
-- MacBook Pro (13-inch, M1, 2020)
-- Chip - Apple M1
-- Memory - 8 GB
-- OS - Monterey Version 12.1
-
-I have no idea if this will run on your machine but you're welcome to try by calling `make` in the root directory followed by `./app`
