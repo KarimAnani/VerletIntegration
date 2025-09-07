@@ -4,6 +4,8 @@
 ### Synopsis
 This is an implementation of [Verlet Integration](https://www.algorithm-archive.org/contents/verlet_integration/verlet_integration.html), a numerical method commonly used for approximating trajectories. It's made with the C programming language and [OpenGL](https://www.khronos.org/about/), a popular API for GPU rendering. See [here](https://github.com/marichardson137/PyOpenGL) for the Python version (outdated).
 
+Use the arrow keys to move the shape. Press G to apply force, V to add particles, and W and S for the camera.
+
 ### Key Features
 - Simulate thousands of particles (at 60 FPS) experiencing real-time collisions, arbitrary forces, constraints, and linking.
 - First person camera that can be controlled using the mouse and keyboard _or_ animated along a path ([Bézier curve](https://en.wikipedia.org/wiki/B%C3%A9zier_curve)).
